@@ -1,0 +1,8 @@
+{
+  "files.watcherExclude": {
+    "**/target": true,
+    "**/.bloop": true,
+    "**/.metals": true,
+    "**/.ammonite": true
+  }
+}

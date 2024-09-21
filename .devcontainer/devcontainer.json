@@ -1,0 +1,39 @@
+{
+  "name": "Ubuntu",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.renderWhitespace": "boundary",
+        "editor.wordWrap": "off",
+        "editor.minimap.enabled": false,
+        "editor.fontLigatures": false,
+        "editor.cursorStyle": "block",
+        "editor.renderLineHighlight": "all",
+        "editor.bracketPairColorization.enabled": true,
+        "editor.rulers": [80],
+        "workbench.sideBar.location": "right",
+        "workbench.activityBar.location": "top",
+        "workbench.colorTheme": "Dracula Theme",
+        "workbench.startupEditor": "none",
+        "telemetry.telemetryLevel": "off",
+        "metals.javaVersion": "21",
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      },
+      "extensions": [
+        "dracula-theme.theme-dracula",
+        "scalameta.metals",
+        "esbenp.prettier-vscode",
+        "davidanson.vscode-markdownlint"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+# metals scala LSP
+.metals/
+.bloop/
+
+# out
+out/
