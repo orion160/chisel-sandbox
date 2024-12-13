@@ -29,3 +29,23 @@ class SimpleCounter2(maxVal: Int) extends Module {
   count := Mux(io.en, nextVal, count)
   io.out := count
 }
+
+class SimpleCounter3(maxVal: Int) extends Module {
+  require(maxVal > 0)
+
+  val io = IO(new Bundle {
+    val en = Input(Bool())
+    val out = Output(UInt())
+  })
+
+  val count = RegInit(0.U(log2Ceil(maxVal + 1).W))
+
+  when(io.en) {
+    when(count < maxVal.U) {
+      count := count + 1.U
+    }.otherwise {
+      count := 0.U
+    }
+  }
+  io.out := count
+}
