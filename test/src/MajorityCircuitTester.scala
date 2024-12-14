@@ -49,4 +49,18 @@ class PassthroughTest extends AnyFreeSpec with Matchers {
       dut.io.out.expect(false.B)
     }
   }
+
+  "Exhaustive test MajorityCircuit w/ loop" in {
+    simulate(new MajorityCircuit()) { dut =>
+      for (
+        i <- Seq(true, false); j <- Seq(true, false); k <- Seq(true, false)
+      ) {
+        dut.io.a.poke(i.B)
+        dut.io.b.poke(j.B)
+        dut.io.c.poke(k.B)
+        val expected = (i && j) || (i && k) || (j && k)
+        dut.io.out.expect(expected.B)
+      }
+    }
+  }
 }
