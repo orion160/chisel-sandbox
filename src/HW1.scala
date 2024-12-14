@@ -36,3 +36,46 @@ class MajorityCircuit extends Module {
   })
   io.out := (io.a & io.b) | (io.a & io.c) | (io.b & io.c)
 }
+
+// c0: 8-bit Int
+// c1: 8-bit Int
+// c2: 8-bit Int
+// io.x: 8-bit UInt Input
+// io.out: ???-bit UInt Output
+
+class PolyEval(c0: Int, c1: Int, c2: Int) extends Module {
+  require(c0 >= 0 && c0 < 256)
+  require(c1 >= 0 && c1 < 256)
+  require(c2 >= 0 && c2 < 256)
+  val io = IO(new Bundle {
+    val x = Input(UInt(8.W))
+    val enable = Input(Bool())
+    val out = Output(UInt(8.W))
+  })
+
+  // when(io.enable == false.B) {
+  //  out := 0
+  // }
+
+  val x = c0 + c1 * io.x + c2 * io.x ^ 2
+}
+
+// onlyAdd: Boolean
+// io.useAdd: Bool Input
+// io.real0: 7-bit SInt Input
+// io.imag0: 7-bit SInt Input
+// io.real1: 7-bit SInt Input
+// io.imag1: 7-bit SInt Input
+// io.realOut: SInt() Output
+// io.imagOut: SInt() Output
+class ComplexALU(onlyAdder: Boolean) extends Module {
+  val io = IO(new Bundle {
+    val doAdd = Input(Bool())
+    val real0 = Input(SInt(7.W))
+    val imag0 = Input(SInt(7.W))
+    val real1 = Input(SInt(7.W))
+    val imag1 = Input(SInt(7.W))
+    val realOut = Output(SInt())
+    val imagOut = Output(SInt())
+  })
+}
