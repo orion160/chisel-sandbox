@@ -51,3 +51,13 @@ class SimpleCounter3(maxVal: Int) extends Module {
   }
   io.out := count
 }
+
+class SimpleCounter4(maxVal: Int) extends Module {
+  require(maxVal > 0)
+  val io = IO(new Bundle {
+    val en = Input(Bool())
+    val out = Output(UInt())
+  })
+  val (counterValue, counterWrap) = Counter(io.en, maxVal)
+  io.out := counterValue
+}
