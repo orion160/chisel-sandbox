@@ -8,7 +8,6 @@ import chisel3.util._
 class Generator(w: Int, c: Int) extends Module {
   val io = IO(new Bundle {
     val en = Input(Bool())
-    val in = Input(UInt(w.W))
     val out = Valid(UInt(w.W))
   })
 
