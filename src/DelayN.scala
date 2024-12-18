@@ -16,3 +16,12 @@ class DelayN(n: Int) extends Module {
 
   io.out := regs(n - 1)
 }
+
+class DelayN2(n: Int) extends Module {
+  require(n > 0)
+  val io = IO(new Bundle {
+    val in = Input(Bool())
+    val out = Output(Bool())
+  })
+  io.out := (0 until n).foldLeft(io.in) { (lastConn, i) => RegNext(lastConn) }
+}

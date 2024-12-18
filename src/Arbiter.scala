@@ -67,3 +67,16 @@ class Arbiter4(numPorts: Int, w: Int) extends Module {
   io.out.bits := Mux1H(chosenOH, io.req.map { _.bits })
   io.req.zip(chosenOH) foreach { case (i, c) => i.ready := c && io.out.fire }
 }
+
+class Arbiter5(numPorts: Int, w: Int) extends Module {
+  require(numPorts > 0)
+  val io = IO(new Bundle {
+    val req = Flipped(Vec(numPorts, Decoupled(UInt(w.W))))
+    val out = Decoupled(UInt(w.W))
+  })
+  val inValids = io.req.map { _.valid }
+  io.out.valid := inValids reduce { _ || _ }
+  val chosenOH = PriorityEncoderOH(inValids)
+  io.out.bits := Mux1H(chosenOH, io.req.map { _.bits })
+  io.req.zip(chosenOH) foreach { case (i, c) => i.ready := c && io.out.fire }
+}

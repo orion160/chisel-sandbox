@@ -16,3 +16,13 @@ class SumReducer(n: Int, w: Int) extends Module {
 
   io.out := total
 }
+
+class SumReducer2(n: Int, w: Int) extends Module {
+  require(n > 0 && w > 0)
+
+  val io = IO(new Bundle {
+    val in = Input(Vec(n, UInt(w.W)))
+    val out = UInt(w.W)
+  })
+  io.out := io.in reduce { _ + _ }
+}
