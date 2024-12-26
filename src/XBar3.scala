@@ -3,21 +3,21 @@ package sandboxa
 import chisel3._
 import chisel3.util._
 
-case class XBarParams(numHosts: Int, payloadSize: Int) {
+case class XBarParams[T <: chisel3.Data](numHosts: Int, payloadT: T) {
   def addrbitW = log2Ceil(numHosts + 1)
 }
 
-class Message(p: XBarParams) extends Bundle {
+class Message[T <: chisel3.Data](p: XBarParams[T]) extends Bundle {
   val addr = UInt(p.addrbitW.W)
-  val data = UInt(p.payloadSize.W)
+  val data = p.payloadT
 }
 
-class PortIO(p: XBarParams) extends Bundle {
+class PortIO[T <: chisel3.Data](p: XBarParams[T]) extends Bundle {
   val in = Flipped(Decoupled(new Message(p)))
   val out = Decoupled(new Message(p))
 }
 
-class XBar(p: XBarParams) extends Module {
+class XBar[T <: chisel3.Data](p: XBarParams[T]) extends Module {
   val io = IO(new Bundle {
     val ports = Vec(p.numHosts, new PortIO(p))
   })
